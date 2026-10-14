@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --cream: #FFF7F0;
+  --ink: #17141F;
+  --pink: #FF4F8B;
+  --lilac: #B8A1FF;
+  --mint: #8FF0C8;
+  --yellow: #FFE45E;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-pink: var(--pink);
+  --color-lilac: var(--lilac);
+  --color-mint: var(--mint);
+  --color-yellow: var(--yellow);
+  
+  --font-syne: 'Syne', sans-serif;
+  --font-dm-sans: 'DM Sans', sans-serif;
+  
+  --radius-button: 8px;
+  --radius-card: 12px;
+  --radius-badge: 16px;
+  --radius-modal: 16px;
+  --radius-input: 8px;
+  --radius-image: 12px;
+  
+  --spacing-2xs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-dm-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-syne);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+button {
+  font-family: var(--font-syne);
+  font-weight: 600;
+}
+
+/* Button styles */
+.btn-primary {
+  background: var(--pink);
+  color: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-button);
+  padding: 16px 32px;
+  box-shadow: 3px 3px 0px var(--ink);
+  font-family: var(--font-syne);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: var(--lilac);
+  box-shadow: 2px 2px 0px var(--ink);
+  transform: translate(1px, 1px);
+}
+
+.btn-primary:active {
+  box-shadow: 1px 1px 0px var(--ink);
+  transform: translate(2px, 2px);
+}
+
+.btn-secondary {
+  background: var(--cream);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-button);
+  padding: 16px 32px;
+  box-shadow: 3px 3px 0px var(--ink);
+  font-family: var(--font-syne);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--pink);
+  color: var(--cream);
+}
+
+/* Badge/Sticker style */
+.badge {
+  display: inline-block;
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-badge);
+  padding: 4px 12px;
+  font-family: var(--font-syne);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--ink);
+  box-shadow: 2px 2px 0px var(--ink);
+}
+
+.badge-new {
+  background: var(--mint);
+}
+
+.badge-sale {
+  background: var(--yellow);
+}
+
+.badge-trending {
+  background: var(--lilac);
+}
+
+/* Card style */
+.card {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-card);
+  box-shadow: 3px 3px 0px var(--ink);
+  padding: var(--spacing-sm);
+}
+
+/* Input style */
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-input);
+  font-family: var(--font-dm-sans);
+  font-size: 16px;
+  background: var(--cream);
+  color: var(--ink);
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 79, 139, 0.2);
+}
