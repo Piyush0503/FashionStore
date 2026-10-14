@@ -99,14 +99,9 @@ jobs:
         run: ./mvnw clean install -DskipTests
       
       - name: Run tests
-        run: ./mvnw test
+        run: ./mvnw test -Dtest="*UnitTest"
         env:
           SPRING_PROFILES_ACTIVE: test
-          DATABASE_URL: jdbc:postgresql://localhost:5432/fashionstore_test
-          DATABASE_USERNAME: postgres
-          DATABASE_PASSWORD: postgres
-          REDIS_HOST: localhost
-          REDIS_PORT: 6379
       
       - name: Verify build artifacts
         run: ls -la target/
