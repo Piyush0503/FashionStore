@@ -3,10 +3,6 @@ package com.fashionstore.backend.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,10 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "return_requests")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class ReturnRequest {
     
     @Id
@@ -49,12 +41,10 @@ public class ReturnRequest {
     @ElementCollection
     @CollectionTable(name = "return_photos", joinColumns = @JoinColumn(name = "return_id"))
     @Column(name = "photo_url")
-    @Builder.Default
     private List<String> photos = new ArrayList<>();
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Builder.Default
     private ReturnStatus status = ReturnStatus.PENDING;
     
     private String adminNotes;
@@ -82,4 +72,118 @@ public class ReturnRequest {
     public enum ReturnStatus {
         PENDING, APPROVED, REJECTED, COMPLETED
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getReturnNumber() {
+        return returnNumber;
+    }
+
+    public void setReturnNumber(String returnNumber) {
+        this.returnNumber = returnNumber;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public OrderItem getOrderItem() {
+        return orderItem;
+    }
+
+    public void setOrderItem(OrderItem orderItem) {
+        this.orderItem = orderItem;
+    }
+
+    public ReturnReason getReason() {
+        return reason;
+    }
+
+    public void setReason(ReturnReason reason) {
+        this.reason = reason;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
+    }
+
+    public ReturnStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ReturnStatus status) {
+        this.status = status;
+    }
+
+    public String getAdminNotes() {
+        return adminNotes;
+    }
+
+    public void setAdminNotes(String adminNotes) {
+        this.adminNotes = adminNotes;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getApprovedAt() {
+        return approvedAt;
+    }
+
+    public void setApprovedAt(LocalDateTime approvedAt) {
+        this.approvedAt = approvedAt;
+    }
+
+    public LocalDateTime getRejectedAt() {
+        return rejectedAt;
+    }
+
+    public void setRejectedAt(LocalDateTime rejectedAt) {
+        this.rejectedAt = rejectedAt;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    
 }

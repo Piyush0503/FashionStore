@@ -3,17 +3,9 @@ package com.fashionstore.backend.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "product_variants")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class ProductVariant {
     
     @Id
@@ -32,7 +24,6 @@ public class ProductVariant {
     @NotNull(message = "Stock quantity is required")
     @PositiveOrZero(message = "Stock cannot be negative")
     @Column(nullable = false)
-    @Builder.Default
     private Integer stock = 0;
     
     public enum Size {
@@ -42,4 +33,38 @@ public class ProductVariant {
     public boolean isInStock() {
         return stock > 0;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    
 }
