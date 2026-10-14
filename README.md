@@ -2,219 +2,376 @@
 
 A full-stack e-commerce platform for selling Kurtis, Dresses, and Co-ord Sets to Gen-Z women in India.
 
-## Tech Stack
+## 🏗️ Tech Stack
 
 ### Frontend
 - **Next.js 15** (TypeScript, App Router)
 - **Tailwind CSS 4** (with custom brand styling)
 - **React 19**
+- **ESLint** & **Prettier**
 
 ### Backend
 - **Spring Boot 3.4.2**
-- **Java 17**
-- **Spring Data JPA**
+- **Java 21**
+- **Spring Data JPA** with Flyway migrations
 - **Spring Security** with JWT authentication
 - **PostgreSQL 16**
+- **Redis 7** for caching
+- **SpringDoc OpenAPI** (Swagger)
+- **Spring Actuator** for monitoring
 
-## Project Structure
+### Infrastructure
+- **Docker Compose** for local development
+- **GitHub Actions** for CI/CD
+
+## 📁 Project Structure
 
 ```
 .
 ├── frontend/                # Next.js frontend application
 │   ├── app/                # App router pages
-│   ├── components/         # React components (to be created)
+│   ├── components/         # React components
 │   ├── lib/               # Utilities, types, API clients
 │   └── public/            # Static assets
 │
 ├── backend/               # Spring Boot backend API
 │   └── src/
-│       └── main/
-│           ├── java/com/fashionstore/backend/
-│           │   ├── model/         # JPA entities
-│           │   ├── repository/    # Data repositories
-│           │   ├── service/       # Business logic (to be created)
-│           │   ├── controller/    # REST controllers (to be created)
-│           │   ├── config/        # Configuration (to be created)
-│           │   └── dto/           # Data transfer objects (to be created)
-│           └── resources/
-│               └── application.yml
+│       ├── main/
+│       │   ├── java/com/fashionstore/backend/
+│       │   │   ├── config/        # Configuration classes
+│       │   │   ├── controller/    # REST controllers
+│       │   │   ├── model/         # JPA entities
+│       │   │   ├── repository/    # Data repositories
+│       │   │   └── service/       # Business logic
+│       │   └── resources/
+│       │       ├── application.yml         # Main config
+│       │       ├── application-dev.yml     # Dev profile
+│       │       ├── application-test.yml    # Test profile
+│       │       ├── application-prod.yml    # Production profile
+│       │       └── db/migration/          # Flyway migrations
+│       └── test/
 │
+├── docker-compose.yml     # Docker services (PostgreSQL, Redis)
+├── .github/workflows/     # CI/CD pipelines
 └── PRODUCT_REQUIREMENTS.md    # Complete product specification
 ```
 
-## Features Implemented
-
-### Backend Models
-✅ User (Customer & Admin roles)
-✅ Product (with variants for sizes)
-✅ Order (with guest checkout support)
-✅ OrderItem
-✅ Address
-✅ ReturnRequest
-✅ Repositories for all entities
-
-### Frontend Setup
-✅ Brand styling (colors, fonts, buttons, badges)
-✅ TypeScript types for all entities
-✅ API client utilities
-✅ Cart management utilities
-✅ Helper functions (formatting, validation)
-
-## Setup Instructions
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ (v22 recommended)
-- Java 17+
-- PostgreSQL 16
-- Maven 3+
 
-### Database Setup
+- **Node.js** 18+ (v22 recommended)
+- **Java** 21
+- **Docker** & **Docker Compose**
+- **Maven** 3.8+
 
-1. Install and start PostgreSQL
-2. Create database:
-```sql
-CREATE DATABASE fashionstore;
-CREATE USER postgres WITH PASSWORD 'postgres';
-GRANT ALL PRIVILEGES ON DATABASE fashionstore TO postgres;
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd E-commerce
 ```
 
-### Backend Setup
+### 2. Start Docker Services
 
-1. Navigate to backend directory:
+```bash
+docker-compose up -d
+```
+
+This starts:
+- PostgreSQL on `localhost:5432`
+- Redis on `localhost:6379`
+
+Verify services are healthy:
+```bash
+docker-compose ps
+```
+
+### 3. Backend Setup
+
+#### Create environment file
 ```bash
 cd backend
+cp .env.example .env
 ```
 
-2. Update database credentials in `src/main/resources/application.yml` if needed
-
-3. Build and run:
+#### Run the application
 ```bash
-./mvnw clean install
+# Using Maven wrapper
 ./mvnw spring-boot:run
+
+# Or specify a profile
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 Backend will start on `http://localhost:8080`
 
-### Frontend Setup
+#### Access Swagger UI
+Open http://localhost:8080/swagger-ui.html
 
-1. Navigate to frontend directory:
+#### Health Check
 ```bash
-cd frontend
+curl http://localhost:8080/api/health
 ```
 
-2. Install dependencies:
+### 4. Frontend Setup
+
+#### Create environment file
+```bash
+cd frontend
+cp .env.example .env.local
+```
+
+#### Install dependencies
 ```bash
 npm install
 ```
 
-3. Create `.env.local` file (already created with defaults):
-```
-NEXT_PUBLIC_API_URL=http://localhost:8080/api
-NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id
-```
-
-4. Run development server:
+#### Run development server
 ```bash
 npm run dev
 ```
 
 Frontend will start on `http://localhost:3000`
 
-## Brand Guidelines
+## 🧪 Running Tests
+
+### Frontend
+```bash
+cd frontend
+npm run lint          # Run ESLint
+npm run format:check  # Check code formatting
+npm run type-check    # TypeScript type checking
+npm test             # Run tests (when implemented)
+npm run build        # Build for production
+```
+
+### Backend
+```bash
+cd backend
+./mvnw test                    # Run all tests
+./mvnw test -Dtest=ClassName   # Run specific test
+./mvnw verify                  # Run tests + integration tests
+```
+
+## 🌿 Git Branching Strategy
+
+We follow **Git Flow** branching model:
+
+### Main Branches
+- **`main`** - Production-ready code. Protected branch.
+- **`develop`** - Integration branch for features. Default branch for PRs.
+
+### Supporting Branches
+
+#### Feature Branches
+- **Naming:** `feature/<feature-name>`
+- **Branch from:** `develop`
+- **Merge into:** `develop`
+
+```bash
+# Create feature branch
+git checkout develop
+git pull origin develop
+git checkout -b feature/user-authentication
+
+# Work on feature, commit changes
+git add .
+git commit -m "feat: add user authentication"
+
+# Push and create PR
+git push origin feature/user-authentication
+```
+
+#### Hotfix Branches
+- **Naming:** `hotfix/<issue-name>`
+- **Branch from:** `main`
+- **Merge into:** `main` and `develop`
+
+```bash
+# Create hotfix branch
+git checkout main
+git pull origin main
+git checkout -b hotfix/critical-bug-fix
+
+# Fix issue, commit, and merge
+```
+
+#### Release Branches
+- **Naming:** `release/<version>`
+- **Branch from:** `develop`
+- **Merge into:** `main` and `develop`
+
+### Branch Protection Rules
+
+#### `main` branch:
+- Require pull request reviews (minimum 1)
+- Require status checks to pass (CI tests)
+- No direct commits allowed
+- Enforce linear history
+
+#### `develop` branch:
+- Require pull request reviews
+- Require CI checks to pass
+- Allow squash merging
+
+## 🔧 Environment Variables
+
+### Backend (.env)
+```env
+SPRING_PROFILES_ACTIVE=dev
+DATABASE_URL=jdbc:postgresql://localhost:5432/fashionstore
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=postgres
+REDIS_HOST=localhost
+REDIS_PORT=6379
+JWT_SECRET=your-256-bit-secret-key
+CORS_ALLOWED_ORIGINS=http://localhost:3000
+```
+
+### Frontend (.env.local)
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8080/api
+NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id
+```
+
+## 🔒 Spring Profiles
+
+### Development (`dev`)
+- Debug logging enabled
+- SQL query logging
+- Swagger UI enabled
+- Hot reload
+- Error details in responses
+
+### Test (`test`)
+- In-memory test database
+- Flyway disabled
+- Minimal logging
+- Swagger disabled
+
+### Production (`prod`)
+- Error details hidden
+- Minimal logging
+- Connection pooling optimized
+- Flyway migrations enforced
+- Swagger disabled by default
+
+Set profile:
+```bash
+# Via Maven
+./mvnw spring-boot:run -Dspring-boot.run.profiles=prod
+
+# Via environment variable
+export SPRING_PROFILES_ACTIVE=prod
+./mvnw spring-boot:run
+
+# Via Docker
+docker run -e SPRING_PROFILES_ACTIVE=prod myapp
+```
+
+## 📊 Database Management
+
+### Flyway Migrations
+
+Migrations are in `backend/src/main/resources/db/migration/`
+
+```bash
+# Apply migrations
+./mvnw flyway:migrate
+
+# Check migration status
+./mvnw flyway:info
+
+# Validate migrations
+./mvnw flyway:validate
+
+# Clean database (dev only!)
+./mvnw flyway:clean
+```
+
+### Manual Database Access
+
+```bash
+# Connect to PostgreSQL
+docker exec -it fashionstore-postgres psql -U postgres -d fashionstore
+
+# Common commands
+\dt          # List tables
+\d+ users    # Describe users table
+\q           # Quit
+```
+
+## 🎨 Brand Guidelines
 
 ### Colors
-- **Cream** (#FFF7F0) - Primary background
-- **Ink** (#17141F) - Primary text
-- **Pink** (#FF4F8B) - Primary CTA, accents
-- **Lilac** (#B8A1FF) - Secondary accents
-- **Mint** (#8FF0C8) - Success states
-- **Yellow** (#FFE45E) - Highlights, sale badges
+- **Cream** `#FFF7F0` - Primary background
+- **Ink** `#17141F` - Primary text
+- **Pink** `#FF4F8B` - Primary CTA
+- **Lilac** `#B8A1FF` - Secondary accents
+- **Mint** `#8FF0C8` - Success states
+- **Yellow** `#FFE45E` - Highlights, sale badges
 
 ### Typography
-- **Syne** - Headings, buttons (weights: 600, 700, 800)
-- **DM Sans** - Body text (weights: 400, 500, 700)
+- **Syne** - Headings, buttons (600, 700, 800)
+- **DM Sans** - Body text (400, 500, 700)
 
-### Components
-- Buttons with offset shadow (sticker effect)
-- Rounded corners (8px buttons, 12px cards, 16px badges)
-- 8px spacing system
+## 📝 API Documentation
 
-## Next Steps
+Once the backend is running, access:
+- **Swagger UI:** http://localhost:8080/swagger-ui.html
+- **OpenAPI JSON:** http://localhost:8080/api-docs
 
-### Backend (To Implement)
-- [ ] JWT authentication configuration
-- [ ] User service and controller
-- [ ] Product service and controller with filtering
-- [ ] Order service and controller
-- [ ] Return service and controller
-- [ ] File upload for product images
-- [ ] Email service for notifications
-- [ ] Razorpay payment integration
-- [ ] Admin controllers
-- [ ] Exception handling
-- [ ] CORS configuration
+## 🐛 Troubleshooting
 
-### Frontend (To Implement)
-- [ ] Layout components (Header, Footer)
-- [ ] Home page
-- [ ] Shop page with filters
-- [ ] Product detail page
-- [ ] Cart page
-- [ ] Checkout flow
-- [ ] Authentication pages
-- [ ] User account pages
-- [ ] Admin dashboard
-- [ ] Admin product management
-- [ ] Admin order management
-- [ ] Admin return management
-- [ ] State management (Context API or Zustand)
-- [ ] Image optimization
-- [ ] SEO optimization
+### Backend won't start
+```bash
+# Check if ports are in use
+lsof -i :8080
+lsof -i :5432
 
-## API Endpoints (Planned)
+# Check Docker services
+docker-compose ps
+docker-compose logs postgres
+docker-compose logs redis
 
-### Public
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/products` - List products with filters
-- `GET /api/products/{id}` - Get product details
-- `GET /api/products/search` - Search products
-- `GET /api/products/featured` - Featured products
+# Restart services
+docker-compose restart
+```
 
-### Authenticated
-- `GET /api/auth/me` - Get current user
-- `POST /api/orders` - Create order
-- `GET /api/orders/user` - Get user orders
-- `GET /api/orders/{id}` - Get order details
-- `POST /api/returns` - Create return request
-- `GET /api/addresses` - Get user addresses
-- `POST /api/addresses` - Add address
+### Frontend build issues
+```bash
+# Clear Next.js cache
+rm -rf frontend/.next
+rm -rf frontend/node_modules
+npm install
+```
 
-### Admin
-- `POST /api/admin/products` - Create product
-- `PUT /api/admin/products/{id}` - Update product
-- `DELETE /api/admin/products/{id}` - Delete product
-- `GET /api/admin/orders` - List all orders
-- `PATCH /api/admin/orders/{id}/status` - Update order status
-- `GET /api/admin/returns` - List return requests
-- `PATCH /api/admin/returns/{id}/status` - Update return status
-- `GET /api/admin/dashboard` - Dashboard analytics
+### Database issues
+```bash
+# Reset database
+docker-compose down -v
+docker-compose up -d
+# Wait for health checks, then restart backend
+```
 
-## Database Schema
+## 🤝 Contributing
 
-See models in `backend/src/main/java/com/fashionstore/backend/model/`:
-- User
-- Product
-- ProductVariant
-- Address
-- Order
-- OrderItem
-- ReturnRequest
+1. Create a feature branch from `develop`
+2. Make your changes
+3. Ensure tests pass: `npm test` and `./mvnw test`
+4. Ensure code is formatted: `npm run format` and `./mvnw spotless:check`
+5. Push your branch and create a Pull Request to `develop`
+6. Wait for CI checks and code review
 
-## License
+## 📄 License
 
 Private project - All rights reserved
 
-## Contact
+## 👥 Team
 
 For questions or issues, contact the development team.
+
+---
+
+**Last Updated:** 2026-10-14

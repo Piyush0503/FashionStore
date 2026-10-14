@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+build
+dist
+coverage
+.turbo
+public
+*.log
+.env*
+package-lock.json

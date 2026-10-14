@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: FashionStoreAPI-Test
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fashionstore_test
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  
+  flyway:
+    enabled: false
+  
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+server:
+  port: 0
+
+jwt:
+  secret: test-secret-key-for-testing-only-minimum-256-bits-required
+  expiration: 3600000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+springdoc:
+  swagger-ui:
+    enabled: false
+
+logging:
+  level:
+    com.fashionstore.backend: INFO
+    org.springframework.web: WARN
